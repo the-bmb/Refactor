@@ -13,6 +13,25 @@ while line[:5] != "class":
     imports += line
     line = file.readline()
 f = False
+firstword = True
+print line
+words = line.split()
+classname = words[1]
+for letter in classname:
+    if letter.isupper():
+        if firstword:
+            firstword = False
+            classname = classname.replace(letter, letter.lower())
+        else:
+            classname = classname.replace(letter, '_'+letter.lower())
+    elif letter == '(':
+        n = classname.find(letter)
+        classname = classname[:n]
+if f:
+    f.close()
+f = open(classname+".py", "w")
+f.write(imports)
+f.write(line)
 for line in file:
     if line[:5] == "class":
         firstword = True
